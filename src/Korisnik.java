@@ -35,6 +35,6 @@ public abstract class Korisnik {
     }
     @Override
     public String toString() {
-        return "Broj korisnika: " + getTelBr();
+        return "Broj korisnika: " + getTelBr() + "\n";
     }
 }

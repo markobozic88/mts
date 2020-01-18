@@ -1,5 +1,4 @@
 import java.util.Arrays;
-
 public class Prepaid extends Korisnik {
     private double kredit;
     private static final double RAZGOVOR = 7.5;
@@ -21,12 +20,10 @@ public class Prepaid extends Korisnik {
             this.setfAndFbroj(prepaid.getfAndFbroj());
         }
     }
-
     public void dopuni_kredit(int dopuna){
         double trenutniKredit = this.getKredit();
         this.setKredit(trenutniKredit + dopuna);
     }
-
     @Override
     public void azuriraj_racun_razgovor(Razgovor razgovor) {
         double cena = getRAZGOVOR();
@@ -38,14 +35,12 @@ public class Prepaid extends Korisnik {
         } else {
             v = new Vreme(razgovor.getTrajanjeRaz().getSat(), razgovor.getTrajanjeRaz().getMinut(), 0);
         }
-
         for (int i = 0; i < this.getfAndFbroj().length; i++){
             if (razgovor.getBrSaKojimSeRaz().equals(this.getfAndFbroj()[i])){
                 cena = getFF();
                 break;
             }
         }
-
         double cenaRazgovora = (getUSPOSTAVA() + (v.getSat() * 60 + v.getMinut()) * cena) * (100 + getPDV()) / 100;
         if (this.getKredit() < cenaRazgovora){
             this.setKredit(0);
@@ -54,14 +49,13 @@ public class Prepaid extends Korisnik {
             this.setKredit(trenutniKredit - cenaRazgovora);
         }
     }
-
     @Override
     public void azuriraj_racun_SMS() {
         double trenutniKredit = this.getKredit();
         if (trenutniKredit < 1){
             this.setKredit(0);
         } else {
-            this.setKredit(trenutniKredit * (100 + getPDV()) / 100);
+            this.setKredit(trenutniKredit - getSMS() * (100 + getPDV()) / 100);
         }
     }
     public double getKredit() {
@@ -88,14 +82,13 @@ public class Prepaid extends Korisnik {
     public static double getSMS() {
         return SMS;
     }
-
-
-
     @Override
     public String toString() {
-        return "Prepaid{" +
-                "kredit=" + kredit +
-                ", fAndFbroj=" + Arrays.toString(fAndFbroj) +
-                '}';
+        String fAndFstring = "[ ";
+        for (int i = 0; i < this.getfAndFbroj().length; i++){
+            fAndFstring += this.getfAndFbroj()[i] + " ";
+        }
+        fAndFstring += "]";
+        return super.toString() + "Kredit: " + this.getKredit() + "\nFriends & Family korisnici: " + fAndFstring;
     }
 }

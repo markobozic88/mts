@@ -1,5 +1,10 @@
 public class Postpaid extends Korisnik {
 
+
+
+
+
+
     public Postpaid(String brojTel) {
         super(brojTel);
     }
