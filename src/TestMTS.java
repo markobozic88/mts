@@ -1,19 +1,19 @@
 import java.util.Random;
 import java.util.Scanner;
-
 public class TestMTS {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
         System.out.println("Unesite za koliko korisnika unosite podatke:");
         int brKorisnika = sc.nextInt();
-
         Korisnik[] korisnici = new Korisnik[brKorisnika];
-
         for (int i = 0; i < brKorisnika; i++){
-            System.out.println("Unesite telefonski broj korisnika " + (i+1) + ":");
-            String unetBroj = sc.next();
-            if (!Korisnik.validanBroj(unetBroj)){
-                i--;
+            String unetBroj;
+            for ( ; ; ){
+                System.out.println("Unesite telefonski broj korisnika " + (i+1) + ":");
+                unetBroj = sc.next();
+                if (Korisnik.validanBroj(unetBroj)){
+                    break;
+                }
             }
             System.out.println("Unesite 1 ili 2:\t1-prepaid korisnik\t2-postpaid korisnik");
             int preOrPost = sc.nextInt();
@@ -40,12 +40,10 @@ public class TestMTS {
                     break;
             }
         }
-
         Random random = new Random();
         for (int i = 0; i < 5; i++){
             Korisnik izabraniKorisnik = korisnici[random.nextInt(korisnici.length)];
-            System.out.println(izabraniKorisnik);
-
+            System.out.println("\nRandom izabran korisnik:\n" + izabraniKorisnik);
             if (izabraniKorisnik instanceof Prepaid){
                 System.out.println("Unesite 1, 2 ili 3:\t1-dopuna\t2-razgovor\t3-sms");
                 int izbor = sc.nextInt();
@@ -87,26 +85,33 @@ public class TestMTS {
                 int izbor = sc.nextInt();
                 switch (izbor){
                     case 1:
-
-
-                        break;
+                        System.out.println("Unesite broj koji se poziva:");
+                        String brSaKojimSeRaz = sc.next();
+                        System.out.println("Unesite trajanje razgovora:\nUnesite sati:");
+                        int sa = sc.nextInt();
+                        System.out.println("Unesite minute:");
+                        int mi = sc.nextInt();
+                        System.out.println("Unesite sekunde:");
+                        int se = sc.nextInt();
+                        if (Vreme.ispravnoVreme(sa, mi, se)){
+                            izabraniKorisnik.azuriraj_racun_razgovor(new Razgovor(brSaKojimSeRaz, new Vreme(sa, mi, se)));
+                            System.out.println("Stanje korisnika:\n" + izabraniKorisnik);
+                            break;
+                        } else {
+                            System.out.println("Neispravno uneto vreme trajanja razgovora!");
+                            i--;
+                            continue;
+                        }
                     case 2:
+                        izabraniKorisnik.azuriraj_racun_SMS();
+                        System.out.println("Stanje korisnika:\n" + izabraniKorisnik);
                         break;
                     default:
                         System.out.println("Pogresna opcija!");
                         i--;
                         break;
                 }
-
             }
-
         }
-
-
-
-
-
-
-
     }
 }

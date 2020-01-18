@@ -1,4 +1,3 @@
-import java.util.Arrays;
 public class Prepaid extends Korisnik {
     private double kredit;
     private static final double RAZGOVOR = 7.5;
