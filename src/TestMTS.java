@@ -32,6 +32,11 @@ public class TestMTS {
                     korisnici[i] = new Prepaid(unetBroj, unetiKredit, ffUneti);
                     break;
                 case 2:
+                    korisnici[i] = new Postpaid(unetBroj);
+                    break;
+                default:
+                    System.out.println("Neispravna opcija!");
+                    i--;
                     break;
             }
         }
@@ -79,6 +84,19 @@ public class TestMTS {
                 }
             } else {
                 System.out.println("Unesite 1 ili 2:\t1-razgovor\t2-sms");
+                int izbor = sc.nextInt();
+                switch (izbor){
+                    case 1:
+
+
+                        break;
+                    case 2:
+                        break;
+                    default:
+                        System.out.println("Pogresna opcija!");
+                        i--;
+                        break;
+                }
 
             }
 
